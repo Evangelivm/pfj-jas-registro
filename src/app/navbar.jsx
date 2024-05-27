@@ -18,9 +18,9 @@ function Navbar() {
           <Link href={"/registro"} className="mr-5 hover:text-yellowFirst">
             Registro
           </Link>
-          <Link href={"/perm"} className="mr-5 hover:text-yellowFirst">
+          {/* <Link href={"/perm"} className="mr-5 hover:text-yellowFirst">
             Permutas
-          </Link>
+          </Link> */}
         </nav>
       </div>
     </header>

@@ -36,7 +36,7 @@ async function Page() {
 
         {/* <Suspense fallback={<Loading />}>{children}</Suspense> */}
 
-        <div className="w-full  mb-20 items-center text-center">
+        {/* <div className="w-full  mb-20 items-center text-center">
           <h1 className="title-font sm:text-4xl text-3xl mb-4 font-medium text-white">
             Registro por Lector QR
           </h1>
@@ -46,7 +46,7 @@ async function Page() {
           <button className="inline-flex text-yellowFirst bg-redFirst border-0 py-2 px-10 focus:outline-none hover:bg-redSecond rounded text-lg m-9">
             Usar Lector QR
           </button>
-        </div>
+        </div> */}
       </div>
     </section>
   );

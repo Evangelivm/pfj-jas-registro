@@ -22,7 +22,7 @@ async function NewPage() {
           Seleccione su Compañia
         </h1>
         <div className="container mx-auto lg:px-24 py-24 sm:p-19 ">
-          <div className="grid grid-flow-row grid-cols-6 gap-4">
+          <div className="grid grid-flow-row gap-4 md:grid-cols-6">
             {pages.map((page) => (
               <Linker comp={page} key={page.compañia} />
             ))}
