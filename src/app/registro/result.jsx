@@ -92,13 +92,13 @@ function Result({ result }) {
                     </td>
                   </tr>
                   <tr>
-                    <th className="px-4 py-3" colSpan="2">
+                    <th className="px-4 py-8" colSpan="2">
                       <button
                         className="text-white text-sm bg-redFirst border-0 py-3 px-10 focus:outline-none hover:bg-redSecond rounded"
                         type="submit"
                         onClick={handleSubmit}
                       >
-                        Confirmar
+                        Confirmar Asistencia
                       </button>
                     </th>
                   </tr>
