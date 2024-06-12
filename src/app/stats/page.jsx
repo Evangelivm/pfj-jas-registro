@@ -19,6 +19,7 @@ function sumStats(data) {
 
 function Page() {
   const [stats, setStats] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
@@ -36,13 +37,22 @@ function Page() {
         setStats(jsonData); // Guardar los datos procesados en el estado
       } catch (err) {
         setError(err); // Manejar errores
+      } finally {
+        setLoading(false); // Finalizar la carga
       }
     };
 
     // Llamar a la función
     loadStats();
   }, []);
-
+  if (loading)
+    return (
+      <div className="bg-blueFirst min-h-screen ">
+        <div className="container px-5 py-24 mx-auto">
+          <h1 className="text-white text-center text-2xl">Cargando datos...</h1>
+        </div>
+      </div>
+    );
   //const stats = await loadStats();
   //console.log(stats);
   const statsInt = stats.map((item) => {
