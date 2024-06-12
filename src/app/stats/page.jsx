@@ -21,8 +21,8 @@ function sumStats(data) {
 async function fetchStats() {
   try {
     const response = await fetch(`${process.env.API_BASE_URL}/api/stats/`, {
-      //next: { revalidate: 3600 },
-      cache: "no-store",
+      next: { revalidate: 10 },
+      //cache: "no-store",
     });
 
     if (!response.ok) {
