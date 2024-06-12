@@ -3,7 +3,7 @@ import Dough from "./dough";
 import Link from "next/link";
 import dotenv from "dotenv";
 
-const dynamic = "force-dynamic";
+//const dynamic = "force-dynamic";
 dotenv.config();
 
 function sumStats(data) {
@@ -21,7 +21,9 @@ function sumStats(data) {
 
 async function fetchStats() {
   try {
-    const response = await fetch(`${process.env.API_BASE_URL}/api/stats/`);
+    const response = await fetch(
+      `${process.env.API_BASE_URL}/api/stats/participante/`
+    );
 
     if (!response.ok) {
       throw new Error(`HTTP error! Status: ${response.status}`);
@@ -45,7 +47,6 @@ async function fetchStats() {
 async function Page() {
   let stats = [];
   try {
-    const refresh = await fetch(`${process.env.API_BASE_URL}/api/revalidate/`);
     stats = await fetchStats();
   } catch (error) {
     return (
