@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { conn } from "@/app/libs/mysql";
 
+export const dynamic = "force-dynamic";
 // Recoje la informacion de toda la compañia
 export async function GET() {
   try {
