@@ -2,6 +2,7 @@
 import Dough from "./dough";
 import Link from "next/link";
 import dotenv from "dotenv";
+import axios from "axios";
 
 //const dynamic = "force-dynamic";
 dotenv.config();
@@ -21,8 +22,8 @@ function sumStats(data) {
 
 async function fetchStats() {
   try {
-    const response = await fetch(
-      `${process.env.API_BASE_URL}/api/stats/participante/`
+    const response = await axios.get(
+      `${process.env.API_BASE_URL}/api/stats/participante`
     );
 
     if (!response.ok) {
