@@ -20,10 +20,7 @@ function sumStats(data) {
 
 async function fetchStats() {
   try {
-    const response = await fetch(`${process.env.API_BASE_URL}/api/stats/`, {
-      next: { revalidate: 10 },
-      //cache: "no-store",
-    });
+    const response = await fetch(`${process.env.API_BASE_URL}/api/stats/`);
 
     if (!response.ok) {
       throw new Error(`HTTP error! Status: ${response.status}`);
@@ -47,6 +44,7 @@ async function fetchStats() {
 async function Page() {
   let stats = [];
   try {
+    const refresh = await fetch(`${process.env.API_BASE_URL}/api/revalidate/`);
     stats = await fetchStats();
   } catch (error) {
     return (
