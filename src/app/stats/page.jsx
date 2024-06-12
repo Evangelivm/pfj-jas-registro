@@ -1,7 +1,6 @@
 "use server";
 import Dough from "./dough";
 import Link from "next/link";
-import axios from "axios";
 import dotenv from "dotenv";
 
 dotenv.config();
@@ -21,14 +20,18 @@ function sumStats(data) {
 
 async function fetchStats() {
   try {
-    const response = await axios.get(`${process.env.API_BASE_URL}/api/stats/`, {
-      headers: {
-        "Cache-Control": "no-cache",
-        Pragma: "no-cache",
-        Expires: "0",
-      },
+    const response = await fetch(`${process.env.API_BASE_URL}/api/stats/`, {
+      //next: { revalidate: 3600 },
+      cache: "no-store",
     });
-    const stats = response.data.map((row) => ({
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+
+    const data = await response.json();
+
+    const stats = data.map((row) => ({
       compañia: row["compañia"],
       confirmados: row["confirmados"],
       contactados: row["contactados"],
