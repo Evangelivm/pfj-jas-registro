@@ -16,7 +16,7 @@ function Navbar() {
             Compañias
           </Link>
           <Link
-            href={"/stats"}
+            href={"/stats/participant"}
             className=" mr-5 sm:mr-0 mx-5 hover:text-yellowFirst"
           >
             Estadisticas

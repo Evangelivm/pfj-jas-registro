@@ -3,7 +3,7 @@ import Dough from "./dough";
 import Link from "next/link";
 import dotenv from "dotenv";
 
-//const dynamic = "force-dynamic";
+const dynamic = "force-dynamic";
 dotenv.config();
 
 function sumStats(data) {
