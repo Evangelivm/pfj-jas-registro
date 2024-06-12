@@ -77,7 +77,7 @@ function Barra({ part }) {
                 autoCorrect="off"
                 autoComplete="off"
               />
-              {suggestions.length > 1 && (
+              {suggestions.length > 0 && (
                 <ul className="bg-white rounded-md  absolute w-full">
                   {suggestions.map((suggestion, index) => (
                     <li

@@ -1,27 +1,8 @@
+"use client";
 import Dough from "./dough";
-import { conn } from "../libs/mysql";
 import Link from "next/link";
-
-async function loadStats() {
-  try {
-    const data = await conn.query(
-      "SELECT a.compañia, SUM( CASE WHEN b.participacion = 3 THEN 1 ELSE 0 END ) AS confirmados, SUM( CASE WHEN b.participacion = 2 THEN 1 ELSE 0 END ) AS contactados, SUM( CASE WHEN b.participacion = 1 THEN 1 ELSE 0 END ) AS cancelados, COUNT(*) AS total FROM participante a JOIN asistencia b ON a.id_part = b.id_part WHERE a.tipo = 'participante' GROUP BY a.compañia;"
-    );
-    // const jsonData = data.map((row) => ({
-    //   compañia: row["compañia"],
-    //   confirmados: row["confirmados"],
-    //   contactados: row["contactados"],
-    //   cancelados: row["cancelados"],
-    //   total: row["total"],
-    // }));
-    const jsonData = data[0];
-    // console.log(jsonData);
-    return jsonData;
-  } catch (error) {
-    console.error("Error loading stats:", error);
-    throw error;
-  }
-}
+import axios from "axios";
+import { useEffect, useState } from "react";
 
 function sumStats(data) {
   return data.reduce(
@@ -36,8 +17,34 @@ function sumStats(data) {
   );
 }
 
-async function page() {
-  const stats = await loadStats();
+function Page() {
+  const [stats, setStats] = useState([]);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    // Definir una función asíncrona dentro del useEffect
+    const loadStats = async () => {
+      try {
+        const response = await axios.get("/api/stats");
+        const jsonData = response.data.map((row) => ({
+          compañia: row["compañia"],
+          confirmados: row["confirmados"],
+          contactados: row["contactados"],
+          cancelados: row["cancelados"],
+          total: row["total"],
+        }));
+        setStats(jsonData); // Guardar los datos procesados en el estado
+      } catch (err) {
+        setError(err); // Manejar errores
+      }
+    };
+
+    // Llamar a la función
+    loadStats();
+  }, []);
+
+  //const stats = await loadStats();
+  //console.log(stats);
   const statsInt = stats.map((item) => {
     for (let clave in item) {
       item[clave] = parseInt(item[clave], 10);
@@ -177,4 +184,4 @@ async function page() {
   );
 }
 
-export default page;
+export default Page;
