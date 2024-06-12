@@ -23,14 +23,11 @@ function sumStats(data) {
 async function fetchStats() {
   try {
     const response = await axios.get(
-      `${process.env.API_BASE_URL}/api/stats/participante`
+      `${process.env.API_BASE_URL}/api/stats/participante/`
     );
 
-    if (!response.ok) {
-      throw new Error(`HTTP error! Status: ${response.status}`);
-    }
-
-    const data = await response.json();
+    // axios automatically parses JSON responses
+    const data = response.data;
 
     const stats = data.map((row) => ({
       compañia: row["compañia"],
@@ -39,6 +36,7 @@ async function fetchStats() {
       cancelados: row["cancelados"],
       total: row["total"],
     }));
+
     return stats;
   } catch (err) {
     throw new Error(`Error al cargar datos: ${err.message}`);
