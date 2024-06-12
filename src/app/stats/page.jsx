@@ -1,8 +1,10 @@
-"use client";
+"use server";
 import Dough from "./dough";
 import Link from "next/link";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 function sumStats(data) {
   return data.reduce(
@@ -17,57 +19,51 @@ function sumStats(data) {
   );
 }
 
-function Page() {
-  const [stats, setStats] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+async function fetchStats() {
+  try {
+    const response = await axios.get(`${process.env.API_BASE_URL}/api/stats/`, {
+      headers: {
+        "Cache-Control": "no-cache",
+        Pragma: "no-cache",
+        Expires: "0",
+      },
+    });
+    const stats = response.data.map((row) => ({
+      compañia: row["compañia"],
+      confirmados: row["confirmados"],
+      contactados: row["contactados"],
+      cancelados: row["cancelados"],
+      total: row["total"],
+    }));
+    return stats;
+  } catch (err) {
+    throw new Error(`Error al cargar datos: ${err.message}`);
+  }
+}
 
-  useEffect(() => {
-    // Definir una función asíncrona dentro del useEffect
-    const loadStats = async () => {
-      try {
-        const response = await axios.get("/api/stats", {
-          headers: {
-            "Cache-Control": "no-cache",
-            Pragma: "no-cache",
-            Expires: "0",
-          },
-        });
-        const jsonData = response.data.map((row) => ({
-          compañia: row["compañia"],
-          confirmados: row["confirmados"],
-          contactados: row["contactados"],
-          cancelados: row["cancelados"],
-          total: row["total"],
-        }));
-        setStats(jsonData); // Guardar los datos procesados en el estado
-      } catch (err) {
-        setError(err); // Manejar errores
-      } finally {
-        setLoading(false); // Finalizar la carga
-      }
-    };
-
-    // Llamar a la función
-    loadStats();
-  }, []);
-  if (loading)
+async function Page() {
+  let stats = [];
+  try {
+    stats = await fetchStats();
+  } catch (error) {
     return (
-      <div className="bg-blueFirst min-h-screen ">
+      <div className="bg-blueFirst min-h-screen">
         <div className="container px-5 py-24 mx-auto">
-          <h1 className="text-white text-center text-2xl">Cargando datos...</h1>
+          <h1 className="text-white text-center text-2xl">{error.message}</h1>
         </div>
       </div>
     );
-  //const stats = await loadStats();
-  //console.log(stats);
+  }
+
   const statsInt = stats.map((item) => {
     for (let clave in item) {
       item[clave] = parseInt(item[clave], 10);
     }
     return item;
   });
+
   const sums = sumStats(statsInt);
+
   return (
     <div className="bg-blueFirst min-h-screen ">
       <div className="container px-5 py-24 mx-auto">
@@ -115,10 +111,7 @@ function Page() {
                   key={stat.compañia}
                 >
                   <div className="border-2 border-gray-200 px-4 py-6 rounded-lg">
-                    <Link
-                      href="/comp/[stat.compañia]"
-                      as={`/comp/${stat.compañia}`}
-                    >
+                    <Link href={`/comp/${stat.compañia}`}>
                       <h2 className="title-font font-medium text-xl text-white mb-2">
                         Compañia {stat.compañia}
                       </h2>
