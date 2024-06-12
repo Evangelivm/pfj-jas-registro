@@ -26,7 +26,13 @@ function Page() {
     // Definir una función asíncrona dentro del useEffect
     const loadStats = async () => {
       try {
-        const response = await axios.get("/api/stats");
+        const response = await axios.get("/api/stats", {
+          headers: {
+            "Cache-Control": "no-cache",
+            Pragma: "no-cache",
+            Expires: "0",
+          },
+        });
         const jsonData = response.data.map((row) => ({
           compañia: row["compañia"],
           confirmados: row["confirmados"],
