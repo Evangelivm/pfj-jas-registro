@@ -20,40 +20,7 @@ function Form() {
   const [barrio, setBarrio] = useState("");
   const router = useRouter();
   const formRef = useRef(null);
-
-  const handleRegistrar = () => {
-    // Aquí podrías implementar la lógica para enviar los datos al servidor
-    console.log("Datos a enviar:", {
-      nombres,
-      apellidos,
-      telefono,
-      sexo,
-      fechaNacimiento,
-      edad,
-      compañia,
-      estaca,
-      barrio,
-    });
-    // Ejemplo de enviar datos mediante fetch:
-    /*
-    fetch('/api/registrar', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ nombres, apellidos, telefono, sexo, fechaNacimiento, edad }),
-    })
-    .then(response => response.json())
-    .then(data => {
-      console.log('Éxito:', data);
-      // Puedes manejar la respuesta aquí
-    })
-    .catch((error) => {
-      console.error('Error:', error);
-    });
-    */
-    //  router.refresh();
-  };
+  const [buttonblock, setbuttonblock] = useState(false);
 
   return (
     <>
@@ -64,6 +31,7 @@ function Form() {
           onSubmit={async (e) => {
             e.preventDefault();
             //setSending(true);
+            setbuttonblock(true);
             const formData = new FormData();
             // if (file1 === null) {
             formData.append("nombres", nombres);
@@ -82,6 +50,7 @@ function Form() {
             const data = await response.json();
             if (data.toast === "success") {
               toast.success("El participante fue registrado con exito");
+              setbuttonblock(false);
               setNombres("");
               setApellidos("");
               setTelefono("");
@@ -95,6 +64,7 @@ function Form() {
               toast.error(
                 "Hubo un problema en el registro, intentelo nuevamente"
               );
+              setbuttonblock(false);
             }
             router.refresh();
             formRef.current.reset();
@@ -209,7 +179,8 @@ function Form() {
               <button
                 type="submit"
                 className="flex mx-auto text-yellowFirst bg-redFirst border-0 py-2 px-8 focus:outline-none hover:bg-redSecond rounded text-lg hover:text-white"
-                //onClick={handleRegistrar}
+                onClick={setbuttonblock(true)}
+                disabled={buttonblock}
               >
                 Registrar
               </button>
