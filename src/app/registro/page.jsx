@@ -25,10 +25,11 @@ async function Page() {
       <div className="container mx-auto flex flex-col px-5 pt-24 pb-2 justify-center items-center">
         <div className="w-full md:w-2/3 flex flex-col mb-16 items-center text-center">
           <h1 className="title-font sm:text-4xl text-3xl mb-4 font-medium text-white">
-            Registro de Participantes
+            Asistencia de Participantes
           </h1>
           <p className="mb-8 leading-relaxed text-white">
-            Escriba el nombre y seleccione cuando aparezca
+            Escriba el nombre, seleccione cuando aparezca y hace click en
+            "Buscar"
           </p>
         </div>
 

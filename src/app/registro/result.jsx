@@ -1,16 +1,19 @@
 "use client";
 import axios from "axios";
 import { Toaster, toast } from "sonner";
+import { useState } from "react";
 
 function isMobile() {
   return /Mobi|Android/i.test(navigator.userAgent);
 }
 
 function Result({ result }) {
+  const [blockbutton, setblockbutton] = useState(false);
   const handleSubmit = async (event) => {
     event.preventDefault(); // Prevenir el comportamiento por defecto del formulario
 
     try {
+      setblockbutton(true);
       const res = await axios.put(`api/part/${result.id_part}`);
 
       // Aquí puedes manejar la respuesta si es necesario
@@ -18,6 +21,7 @@ function Result({ result }) {
       toast.success(
         `Se marcó la asistencia de ${result.nombres} ${result.apellidos}`
       );
+      setblockbutton(false);
     } catch (error) {
       // Manejo de errores
       console.error("Error al enviar el formulario:", error);
@@ -97,6 +101,7 @@ function Result({ result }) {
                         className="text-white text-sm bg-redFirst border-0 py-3 px-10 focus:outline-none hover:bg-redSecond rounded"
                         type="submit"
                         onClick={handleSubmit}
+                        disabled={blockbutton}
                       >
                         Confirmar Asistencia
                       </button>
@@ -155,6 +160,7 @@ function Result({ result }) {
                         className="text-white text-sm bg-redFirst border-0 py-1 px-4 focus:outline-none hover:bg-redSecond rounded"
                         type="submit"
                         onClick={handleSubmit}
+                        disabled={blockbutton}
                       >
                         Confirmar
                       </button>

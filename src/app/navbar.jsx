@@ -9,26 +9,32 @@ function Navbar() {
           <span className="ml-3 sm:ml-0 mx-2 text-xl text-white">PFJ-JAS</span>
         </a>
         <nav className="md:ml-auto flex flex-wrap items-center text-base justify-center">
-          <Link
+          {/* <Link
             href={"/menu"}
             className=" mr-5 sm:mr-0 mx-5 hover:text-yellowFirst "
           >
             Compañias
-          </Link>
-          <Link
+          </Link> */}
+          {/* <Link
             href={"/statsmenu/"}
             className=" mr-5 sm:mr-0 mx-5 hover:text-yellowFirst"
           >
             Estadisticas
-          </Link>
+          </Link> */}
           <Link
             href={"/registro"}
             className="mr-5 sm:mr-0 mx-5 hover:text-yellowFirst"
           >
-            Registro
+            Asistencia
           </Link>
           {/* <Link href={"/perm"} className="mr-5 hover:text-yellowFirst">
             Permutas
+          </Link> */}
+          {/* <Link
+            href={"/new"}
+            className="mr-5 sm:mr-0 mx-5 hover:text-yellowFirst"
+          >
+            Registro
           </Link> */}
         </nav>
       </div>
