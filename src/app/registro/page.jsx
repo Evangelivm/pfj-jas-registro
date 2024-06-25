@@ -29,7 +29,7 @@ async function Page() {
           </h1>
           <p className="mb-8 leading-relaxed text-white">
             Escriba el nombre, seleccione cuando aparezca y hace click en
-            &quotBuscar&quot
+            &quot;Buscar&quot;
           </p>
         </div>
 
