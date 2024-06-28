@@ -6,7 +6,6 @@ import Compañia from "./comp";
 import { useState, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { Toaster, toast } from "sonner";
-import axios from "axios";
 
 function Form() {
   const [nombres, setNombres] = useState("");
@@ -179,7 +178,6 @@ function Form() {
               <button
                 type="submit"
                 className="flex mx-auto text-yellowFirst bg-redFirst border-0 py-2 px-8 focus:outline-none hover:bg-redSecond rounded text-lg hover:text-white"
-                onClick={setbuttonblock(true)}
                 disabled={buttonblock}
               >
                 Registrar
