@@ -22,7 +22,7 @@ function sumStats(data) {
 async function fetchStats() {
   try {
     const response = await axios.get(
-      `${process.env.API_BASE_URL}/api/list/participante/`
+      `${process.env.API_BASE_URL}/api/list/participante`
     );
 
     // axios automatically parses JSON responses

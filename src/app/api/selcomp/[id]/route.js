@@ -6,7 +6,7 @@ export async function GET(request, { params }) {
     const edad = params.id; // Suponiendo que params.id contiene el valor de la edad que deseas consultar
 
     const result = await conn.query(
-      "SELECT a.compañia, SUM(CASE WHEN a.sexo = 'H' THEN 1 ELSE 0 END) AS hombres, SUM(CASE WHEN a.sexo = 'M' THEN 1 ELSE 0 END) AS mujeres FROM participante a JOIN asistencia b ON a.id_part = b.id_part WHERE a.tipo = 'participante' AND a.edad = ?  AND b.asistio = 'Si' GROUP BY a.compañia ORDER BY hombres DESC, mujeres DESC;",
+      "SELECT a.compañia, SUM(CASE WHEN a.sexo = 'H' THEN 1 ELSE 0 END) AS hombres, SUM(CASE WHEN a.sexo = 'M' THEN 1 ELSE 0 END) AS mujeres FROM participante a JOIN asistencia b ON a.id_part = b.id_part WHERE a.compañia IN (SELECT compañia FROM participante WHERE  edad = ? ) AND  a.tipo = 'participante' AND b.asistio = 'Si' GROUP BY a.compañia ORDER BY hombres DESC, mujeres DESC;",
       [edad] // Pasando el mismo parámetro para ambas edades
     );
 
