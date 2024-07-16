@@ -15,11 +15,14 @@ function Barra({ part }) {
 
   useEffect(() => {
     if (inputValue) {
-      // Filtrar sugerencias basadas en el valor de inputValue
-      const filteredSuggestions = part.filter((item) =>
-        item["name"].toLowerCase().includes(inputValue.toLowerCase())
-      );
-      setSuggestions(filteredSuggestions.map((item) => item["name"]));
+      // Filtrar sugerencias basadas en el valor de inputValue y limitar a 10 resultados
+      const filteredSuggestions = part
+        .filter((item) =>
+          item["name"].toLowerCase().includes(inputValue.toLowerCase())
+        )
+        .slice(0, 10); // Limitar las sugerencias a 10
+
+      setSuggestions(filteredSuggestions);
     } else {
       // Si inputValue está vacío, reiniciar las sugerencias
       setSuggestions([]);
@@ -28,19 +31,17 @@ function Barra({ part }) {
 
   const handleSuggestionClick = (suggestion) => {
     // Establecer el valor del input con la sugerencia seleccionada
-    setInputValue(suggestion);
-    const id = part.findIndex((element) => element["name"] === suggestion);
-    const numero = part[id]["id_part"];
-    setpartValue(numero);
+    setInputValue(suggestion.name);
+    setpartValue(suggestion.id_part);
     // Vaciar la lista de sugerencias
     setSuggestions([]);
   };
+
   const handleClick = async () => {
     try {
       // Simulando datos del componente hijo
       const res = await axios.get(`api/part/${partValue}`);
       const result = res.data[0];
-      // console.log(result);
       setResponseData(result);
       setShowResult(true);
     } catch (error) {
@@ -48,6 +49,7 @@ function Barra({ part }) {
       throw error;
     }
   };
+
   const handleButtonClick = () => {
     if (!partValue) {
       toast.warning("Debe buscar un nombre primero");
@@ -78,14 +80,14 @@ function Barra({ part }) {
                 autoComplete="off"
               />
               {suggestions.length > 0 && (
-                <ul className="bg-white rounded-md  absolute w-full">
+                <ul className="bg-white rounded-md absolute w-full">
                   {suggestions.map((suggestion, index) => (
                     <li
                       key={index}
                       onClick={() => handleSuggestionClick(suggestion)}
                       className="py-2 px-3 hover:bg-gray-500 hover:text-white hover:rounded-md cursor-pointer"
                     >
-                      {suggestion}
+                      {suggestion.name}
                     </li>
                   ))}
                 </ul>
