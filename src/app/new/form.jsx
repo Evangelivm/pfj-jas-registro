@@ -1,5 +1,6 @@
 "use client";
 // Form.js
+export const dynamic = "auto";
 import Edad from "./edad";
 import Estaca from "./estaca";
 import Compañia from "./comp";
